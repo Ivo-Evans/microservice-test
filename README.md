@@ -17,3 +17,10 @@ the ansible_user value should be the user of the remote machine - typically ubun
 
 4. From this repo's root directory, `ansible-playbook ./setup.yml` 
 
+## Typescript in the authenticate/ folder
+
+Can be compiled with `npx tsc`
+
+## Docker-compose.yml
+
+`docker-compose up --build`

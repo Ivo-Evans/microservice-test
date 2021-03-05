@@ -1,0 +1,18 @@
+version: "3.7" ## whut
+services: 
+  authenticate:
+    build: authenticate/
+    networks: 
+      - standard
+    ports: 
+      - 8080:8080
+
+  nginx:
+    build: nginx/
+    networks: 
+      - standard
+    ports: 
+      - 80:80
+      
+networks:
+  standard:
