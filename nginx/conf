@@ -1,8 +1,0 @@
-server {
-    listen 80;
-    server_name  localhost;
-    location /authenticate/5 {
-        proxy_pass   http://authenticate:8080/authenticate/5;
-    }
-
-}

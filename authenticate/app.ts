@@ -1,7 +1,12 @@
 import express = require('express')
+const morgan = require('morgan')
+
+const port = 8080
 
 const app  = express()
-const port = 8080
+
+app.use(morgan('tiny'))
+
 
 app.get('/authorisation/:userId', (req: express.Request, res: express.Response) => {
     setTimeout(() => {

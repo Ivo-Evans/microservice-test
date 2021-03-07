@@ -1,0 +1,8 @@
+- ansible
+- First microservice (authenticate) w/Docker
+- nginx and Docker compose
+- Logging - fluentbit - winston in authenticate
+- terraform for EC2 - ansible file in infrastructure/
+- second microservice and Redis to cache results from authenticate
+- RabbitMQ
+- CI/CD pipeline with github actions and lambda

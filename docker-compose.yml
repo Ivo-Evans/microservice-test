@@ -1,18 +1,37 @@
 version: "3.7" ## whut
 services: 
-  authenticate:
-    build: authenticate/
-    networks: 
-      - standard
-    ports: 
-      - 8080:8080
+  fluentbit:
+    build: fluent-bit/
+    ports:
+      - "24224:24224"
+      - "24224:24224/udp"
 
   nginx:
     build: nginx/
+    depends_on:
+      - fluentbit
+      - authenticate
+    logging:
+      driver: fluentd
+      options:
+        tag: nginx
     networks: 
-      - standard
+      - frontnet
     ports: 
       - 80:80
-      
+
+  authenticate:
+    build: authenticate/
+    depends_on:
+      - fluentbit
+    logging:
+      driver: fluentd
+      options:
+        tag: authenticate
+    networks: 
+      - frontnet
+    expose: 
+      - 8080
+
 networks:
-  standard:
+  frontnet:
