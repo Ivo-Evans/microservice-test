@@ -2,20 +2,33 @@
 
 A repo experimenting with modern DevOps and microservice patterns on a small scale
 
-## Ansible
-After creating the EC2 instance, the EC2 instance is configured with Ansible. Further modification of the EC2 instance should also be done with Ansible. Steps to get this working
+## Infrastructure
 
-1. Have an EC2 instance and a private keyfile
-2. Install ansible on your system
-3. edit /etc/ansible/hosts, adding the following info
+Infrastructure is provisioned with Terraform, and then with Ansible. To use this, you will need:
 
-```
-<remote-ip> ansible_user=ubuntu ansible_ssh_private_key_file=<local .pem file>
-```
+- the AWS CLI, with a user configured
+- The Terraform CLI
+- The Ansible CLI
+- An AWS private ssh key.
 
-the ansible_user value should be the user of the remote machine - typically ubuntu for unconfigured Ubuntu EC2s
+To create the infrastructure, first edit the `"ssh_key_private"` variable in `terraform/variables.tf` for your own ssh key. Then, to create the infrastructure, run `terraform apply`. An EC2 instance will be created, and Docker and Docker-compose installed in it after you type `yes` to add the ssh fingerprint. The EC2 instance has very open policies by default.
 
-4. From this repo's root directory, `ansible-playbook ./setup.yml` 
+n.b. that the terraform state will be saved locally when you do this - this is fine if every command you run will be run locally, but if the state that the Terraform CLI has access to differs from AWS, you will likely end up with duplicate resources.  
+
+In a production environment, you would want to configure a 'backend' for state.
+
+Here are some useful commands:
+
+| command | purpose |
+| - | - |
+| terraform init | Installs dependencies for the project. Run once. |
+| terraform fmt | prettify your .tf files |
+| terraform apply | apply tf plan or changes to tf plan |
+| terraform destroy | destroy all infrastructure in terraform state |
+
+### A note on Ansible
+
+Ansible can be used completely independently of Terraform - in fact to use them together, as I have, you have to jump through some hoops. 
 
 ## Typescript in the authenticate/ folder
 
