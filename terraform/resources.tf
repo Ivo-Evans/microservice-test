@@ -19,6 +19,6 @@ resource "aws_instance" "microservices_host" {
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -u fedora -i '${self.public_ip},' --private-key ${var.ssh_key_private} ../ansible/install-docker.yml"
+    command = "export ANSIBLE_HOST_KEY_CHECKING=False && ansible-playbook -u ubuntu -i '${self.public_ip},' --private-key ${var.ssh_key_private} ./ansible/install-docker.yml"
   }
 }
